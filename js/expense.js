@@ -23,11 +23,36 @@ form.addEventListener('submit', function(e) {
     
     expenses.push(newExpense);
 
+    updateExpensesList();
 
 });
 
 function updateExpensesList() {
+    expensesList.innerHTML = '';
 
+    if(expenses.length === 0) {
+        expensesList.innerHTML = '<p>No expenses recorded yet.</p>';
+        return;
+    }
+
+    // otherwise we create the html for each expense
+    expenses.forEach(expense => {
+        const expenseDiv = document.createElement('div');
+        expenseDiv.className = 'expense-item';
+        expenseDiv.innerHTML = `
+            <div class="expense-info">
+                <strong>${expense.description}</strong><br>
+                <small>${expense.date}</small>
+                <span class="expense-category">${expense.category}</span>
+            </div>
+            <div>
+                <span class="expense-amount">${expense.amount.toFixed(2)}</span>
+                <button class="delete-btn" onclick="deleteExpense(${expense.id})">Delete</button>
+            </div>
+        `;
+
+        expensesList.appendChild(expenseDiv);
+    });
 }
 
 function updateTotal() {

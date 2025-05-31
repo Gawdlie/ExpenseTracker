@@ -107,6 +107,14 @@ input:focus, select:focus {
     flex-grow: 1;
 }
 
+.expense-category {
+    background: #667eea;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9em;
+}
+
 .total-section {
     background: linear-gradient(45deg, #667eea, #764ba2);
     color: white;
