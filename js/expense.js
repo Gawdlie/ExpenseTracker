@@ -5,6 +5,36 @@ const form = document.getElementById('expenseForm');
 const expensesList = document.getElementById('expensesList');
 const totalAmountSpent = document.getElementById('totalAmount');
 
+// Function to save expenses to local storage
+function saveExpenses() {
+    try {
+        localStorage.setItem('expenses', JSON.stringify(expenses));
+        console.log('Expense saved: ' + expenses.length);
+    }
+    catch (error) {
+        console.error('Error saving expenses:', error);
+    }
+}
+
+// Function to load expenses from local storage
+function loadExpenses() {
+    try {
+        const saved = localStorage.getItem('expenses');
+
+        if(saved) {
+            expenses = JSON.parse(saved);
+            console.log('Expenses loaded: ' + expenses.length);
+        }
+        else {
+            console.log('No expenses found in local storage.');
+        }
+    }
+    catch (error) {
+        console.error('Error loading expenses:', error);
+        expenses = [];
+    }
+}
+
 form.addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -24,10 +54,13 @@ form.addEventListener('submit', function(e) {
     
     expenses.push(newExpense);
 
+    saveExpenses();
+
     updateExpensesList();
     updateTotal();
     form.reset();
 });
+
 
 function updateExpensesList() {
     expensesList.innerHTML = '';
@@ -64,7 +97,13 @@ function updateTotal() {
 
 function deleteExpense(id) {
     expenses = expenses.filter(expense => expense.id !== id);
+    saveExpenses();
     updateExpensesList();
     updateTotal();
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    loadExpenses();
+    updateExpensesList();
+    updateTotal();
+});
