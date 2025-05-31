@@ -25,6 +25,7 @@ form.addEventListener('submit', function(e) {
     expenses.push(newExpense);
 
     updateExpensesList();
+    updateTotal();
     form.reset();
 });
 
@@ -57,10 +58,13 @@ function updateExpensesList() {
 }
 
 function updateTotal() {
-
+    totalAmount = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+    totalAmountSpent.textContent = totalAmount.toFixed(2);
 }
 
 function deleteExpense(id) {
-
+    expenses = expenses.filter(expense => expense.id !== id);
+    updateExpensesList();
+    updateTotal();
 }
 
