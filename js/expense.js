@@ -13,6 +13,7 @@ form.addEventListener('submit', function(e) {
     const category = document.getElementById('category').value;
 
     // create new object for the new expense
+
     const newExpense = {
         id: Date.now(),
         description: description,
@@ -24,7 +25,7 @@ form.addEventListener('submit', function(e) {
     expenses.push(newExpense);
 
     updateExpensesList();
-
+    form.reset();
 });
 
 function updateExpensesList() {
